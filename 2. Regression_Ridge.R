@@ -1,4 +1,4 @@
-setwd("C:/Users/MUTLU/Downloads/2) COURS/M2 STAT ECO/MACHINE LEARNING-METHODE SUPERVISEE/Projet")
+setwd("D:/Projet")
 getwd()
 
 # install.packages("questionr")
@@ -9,7 +9,7 @@ fichier_train <- read.csv2("Base_TRAIN.csv", sep = ",")
 fichier_test <- read.csv2("Base_TEST.csv", sep = ",")
 
 ########################################
-#### Vérification de la colinéarité ####
+#### VÃ©rification de la colinÃ©aritÃ© ####
 ########################################
 
 T_1 <- fichier_train[,c(5,6,7,9,10,11,19:25,27,28,32)]
@@ -181,7 +181,7 @@ fichier_train$education_secondary <- as.factor(fichier_train$education_secondary
 fichier_train$education_tertiary <- as.factor(fichier_train$education_tertiary)
 fichier_train$education_unknown <- as.factor(fichier_train$education_unknown)
 
-### Préparation de la base ###
+### PrÃ©paration de la base ###
 fichier_train_1 <- fichier_train[,c(33:73)]
 fichier_train_2 <- fichier_train[,c(118:122)]
 Base_Train <- cbind(fichier_train_1,fichier_train_2)
@@ -239,7 +239,7 @@ Base_Train <- Base_Train[,-c(37:45)]
 
 
 ########################################
-#### Vérification de la colinéarité ####
+#### VÃ©rification de la colinÃ©aritÃ© ####
 ########################################
 
 T_2 <- fichier_test[,c(5,6,7,9,10,11,19:25,27,28,32)]
@@ -378,7 +378,7 @@ cramer(T_2$cl_previous,T_2$cl_month)
 ######################################
 
 #####################################################################
-########## On refait la même chose pour la base test ################
+########## On refait la mÃªme chose pour la base test ################
 #####################################################################
 
 ## Recodage de fichier_test$cl_previous en fichier_test$cl_previous_rec
@@ -459,7 +459,7 @@ Base_Test <- Base_Test[,-c(37:45)]
 #chisq.test(Base_Train$Marital_D,Base_Train$Housing_0)
 #####################################################################
 
-### Modèle de regression logistique ###
+### ModÃ¨le de regression logistique ###
 reg_log <- glm(Ynum~., data = Base_Train, family = binomial(link = "logit"))
 summary(reg_log)
 
@@ -472,17 +472,17 @@ Base_Train <- Base_Train[,-c(3,16)]
 
 reg_log <- glm(Ynum~., data = Base_Train, family = binomial(link = "logit"))
 summary(reg_log)
-### Probabilité de la variable Ynum ###
+### ProbabilitÃ© de la variable Ynum ###
 predict_train <- data.frame(predict_ynum=predict(reg_log))
 
 # Choix du meilleur modele
 # modselect=stepAIC(reg_log,~.,trace=TRUE,
 #                  direction=c("both"))
-#both est l'option par défaut
+#both est l'option par dÃ©faut
 #summary(modselect)
 
 
-### Modèle de regression logistique, avec le modele qui minimise l'aic ###
+### ModÃ¨le de regression logistique, avec le modele qui minimise l'aic ###
 #reg_log <- glm(Ynum ~ Marital_M + Housing_0 + Loan_0 + Contact_C + Contact_T + 
 #                 Poutcome_F + Poutcome_S + Cl_age_1 + Cl_age_2 + Cl_balance_1 + 
 #                 Cl_balance_2 + Cl_balance_3 + Cl_day_2 + Cl_duration_1 + 
@@ -492,7 +492,7 @@ predict_train <- data.frame(predict_ynum=predict(reg_log))
 
 
 ### recodage de la variable pred_ynum en factor, on impose un seuil de 0.11 ###
-### qui corresspond à la proportion de 1 dans la base ###
+### qui corresspond Ã  la proportion de 1 dans la base ###
 predict_train$pred_ynum <- ifelse(predict_train$predict_ynum <= 0.79,"0","1")
 predict_train$pred_ynum <- as.factor(predict_train$pred_ynum)
 summary(predict_train$pred_ynum)
@@ -511,7 +511,7 @@ Tx_err(Base_Train$Ynum, predict_train$pred_ynum)
 
 
 
-#### on applique notre modèle à la base Test ####
+#### on applique notre modÃ¨le Ã  la base Test ####
 Base_Test_1 <- Base_Test[,-c(2,4,6,8,10,13,17,20,24,27,32,36)]
 Base_Test_1 <- Base_Test_1[,-c(3,16)]
 Base_Test_1 <- Base_Test_1[,c(2:22)]
@@ -534,8 +534,8 @@ pred <- prediction(proba_predite, valeur)
 
 performance(pred, measure = "auc") # aire sous la courbe ROC = 0.88
 pred_sens <- performance(pred, measure = "sens", x.measure = "cutoff")
-x <- (performance(pred, measure = "sens", x.measure = "cutoff")) # taux de prédit pour 1
-y <- (performance(pred, measure = "spec", x.measure = "cutoff")) # taux de prédit pour 0
+x <- (performance(pred, measure = "sens", x.measure = "cutoff")) # taux de prÃ©dit pour 1
+y <- (performance(pred, measure = "spec", x.measure = "cutoff")) # taux de prÃ©dit pour 0
 
 
 e <- data.frame(x@x.values,x@y.values)
@@ -577,8 +577,8 @@ pred <- prediction(proba_predite, valeur)
 
 performance(pred, measure = "auc") # aire sous la courbe ROC = 0.88
 pred_sens <- performance(pred, measure = "sens", x.measure = "cutoff")
-x <- (performance(pred, measure = "sens", x.measure = "cutoff")) # taux de prédit pour 1
-y <- (performance(pred, measure = "spec", x.measure = "cutoff")) # taux de prédit pour 0
+x <- (performance(pred, measure = "sens", x.measure = "cutoff")) # taux de prÃ©dit pour 1
+y <- (performance(pred, measure = "spec", x.measure = "cutoff")) # taux de prÃ©dit pour 0
 
 # install.packages("arulesViz")
 library(arulesViz)
@@ -616,7 +616,7 @@ legend(.8, .4, auc, title="AUC", cex= 0.8)
 
 
 ################################################
-##### Regression logistique pénalisée Ridge ####
+##### Regression logistique pÃ©nalisÃ©e Ridge ####
 ################################################
 
 #install.packages("glmnet")
@@ -674,8 +674,8 @@ pred_R <- prediction(as.numeric(as.character(proba_predite_R)), valeur_R)
 
 performance(pred_R, measure = "auc") 
 pred_sens <- performance(pred_R, measure = "sens", x.measure = "cutoff")
-j <- (performance(pred_R, measure = "sens", x.measure = "cutoff")) # taux de prédit pour 1
-l <- (performance(pred_R, measure = "spec", x.measure = "cutoff")) # taux de prédit pour 0
+j <- (performance(pred_R, measure = "sens", x.measure = "cutoff")) # taux de prÃ©dit pour 1
+l <- (performance(pred_R, measure = "spec", x.measure = "cutoff")) # taux de prÃ©dit pour 0
 
 ### Courbe de ROC ####
 
@@ -702,8 +702,8 @@ pred_R <- prediction(as.numeric(as.character(proba_predite_R)), valeur_R)
 
 performance(pred_R, measure = "auc") 
 pred_sens <- performance(pred_R, measure = "sens", x.measure = "cutoff")
-x <- (performance(pred_R, measure = "sens", x.measure = "cutoff")) # taux de prédit pour 1
-y <- (performance(pred_R, measure = "spec", x.measure = "cutoff")) # taux de prédit pour 0
+x <- (performance(pred_R, measure = "sens", x.measure = "cutoff")) # taux de prÃ©dit pour 1
+y <- (performance(pred_R, measure = "spec", x.measure = "cutoff")) # taux de prÃ©dit pour 0
 
 ### Courbe de ROC ####
 
