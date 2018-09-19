@@ -1,5 +1,5 @@
-# Importation et préparation des données
-setwd("H:/Documents/Master 2 MAS/Machine Learning/Dorothée Delaunay/PROJET")
+# Importation et prÃ©paration des donnÃ©es
+setwd("H:/PROJET")
 BDD_app<-read.csv("Base_TRAIN.csv", header=TRUE, sep=";")
 BDD_test<-read.csv("Base_TEST.csv", header=TRUE, sep=";")
 
@@ -23,7 +23,7 @@ library(glmnet)
 reg <- glm(Ynum ~ ., data = BDD_app, family = binomial(logit))
 summary(reg)
 
-# Problème de modalité de référence
+# ProblÃ¨me de modalitÃ© de rÃ©fÃ©rence
 BDD_app<-BDD_app[,-c(4,6,8,10,13,17,20,24,27,32,36,40)]
 
 # regression logistique
@@ -82,7 +82,7 @@ plot(unlist(L@x.values),unlist(L@y.values),xlab="TFP (1-specificite)", ylab="TVP
 
 ##################################### alpha = 0.5 #####################################
 
-# Variables expliquée et explicatives
+# Variables expliquÃ©e et explicatives
 
 BDD_app<-read.csv("Base_TRAIN.csv", header=TRUE, sep=";")
 BDD_test<-read.csv("Base_TEST.csv", header=TRUE, sep=";")
@@ -107,7 +107,7 @@ app=glmnet(xx.app,y.app,lambda=lambda.opt)
 app.elnet2=predict(a.elnet2,newx=xx.app)
 mean((app.elnet2-BDD_app[,1])^2)
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet2=predict(a.elnet2,newx=xx.test)
@@ -128,7 +128,7 @@ auc=performance(pred21, "auc")@y.values[[1]]
 auc
 plot(unlist(L@x.values),unlist(L@y.values),xlab="TFP (1-specificite)", ylab="TVP (sensibilite)", main="Courbe ROC - Elastic Net (base d'apprentissage)",type="s",col="blue")
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet3=predict(a.elnet3,newx=xx.test)
@@ -148,7 +148,7 @@ app=glmnet(xx.app,y.app,lambda=lambda.opt)
 app.elnet4=predict(a.elnet4,newx=xx.app)
 mean((app.elnet4-BDD_app[,1])^2)
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet4=predict(a.elnet4,newx=xx.test)
@@ -179,7 +179,7 @@ app=glmnet(xx.app,y.app,lambda=lambda.opt)
 app.elnet2=predict(a.elnet2,newx=xx.app)
 mean((app.elnet2-BDD_app[,1])^2)
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet2=predict(a.elnet2,newx=xx.test)
@@ -200,7 +200,7 @@ auc=performance(pred21, "auc")@y.values[[1]]
 auc
 plot(unlist(L@x.values),unlist(L@y.values),xlab="TFP (1-specificite)", ylab="TVP (sensibilite)", main="Courbe ROC - Elastic Net (base d'apprentissage)",type="s",col="blue")
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet3=predict(a.elnet3,newx=xx.test)
@@ -220,7 +220,7 @@ app=glmnet(xx.app,y.app,lambda=lambda.opt)
 app.elnet4=predict(a.elnet4,newx=xx.app)
 mean((app.elnet4-BDD_app[,1])^2)
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet4=predict(a.elnet4,newx=xx.test)
@@ -251,7 +251,7 @@ app=glmnet(xx.app,y.app,lambda=lambda.opt)
 app.elnet2=predict(a.elnet2,newx=xx.app)
 mean((app.elnet2-BDD_app[,1])^2)
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet2=predict(a.elnet2,newx=xx.test)
@@ -272,7 +272,7 @@ auc=performance(pred21, "auc")@y.values[[1]]
 auc
 plot(unlist(L@x.values),unlist(L@y.values),xlab="TFP (1-specificite)", ylab="TVP (sensibilite)", main="Courbe ROC - Elastic Net (base d'apprentissage)",type="s",col="blue")
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet3=predict(a.elnet3,newx=xx.test)
@@ -292,14 +292,14 @@ app=glmnet(xx.app,y.app,lambda=lambda.opt)
 app.elnet4=predict(a.elnet4,newx=xx.app)
 mean((app.elnet4-BDD_app[,1])^2)
 
-#erreur de prédiction
+#erreur de prÃ©diction
 xx.test<-BDD_test[,2:21]
 xx.test<-as.matrix(xx.test)
 predi.elnet4=predict(a.elnet4,newx=xx.test)
 mean((predi.elnet4-BDD_test[,1])^2)
 
 #########################################################################################################################
-##################################### Visualisation graphique pour différents alpha #####################################
+##################################### Visualisation graphique pour diffÃ©rents alpha #####################################
 #########################################################################################################################
 
 y.test<-BDD_test[,1]
@@ -331,7 +331,7 @@ par(mfrow=c(1,2))
 plot(elnet_07, xvar="lambda")
 plot(fit8, main="Elastic Net alpha= 0.7")
 
-############################################ Graph rÃ©sumÃ© ###########################################################
+############################################ Graph rÃƒÂ©sumÃƒÂ© ###########################################################
 dev.off()
 par(mfrow=c(3,2))
 plot(elnet_04, xvar="lambda")
